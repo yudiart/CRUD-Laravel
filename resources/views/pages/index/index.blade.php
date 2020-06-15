@@ -4,10 +4,19 @@
 
 @section('container')
     <div class="mt-2">
-        @component('pages.index.item.indexItem')@endcomponent
+        @component('pages.index.item.indexItem',[
+            'data_siswa'=> $data_siswa,
+            'laki'=> $laki,
+            'perempuan'=> $perempuan
+            ])@endcomponent
             @if(session('success'))
                 <div class="alert alert-success" id="alert">
-                    Data Bershasil Di input
+                    <?= session('success')?>
+                </div>
+            @endif
+            @if(session('delete'))
+                <div class="alert alert-danger" id="alert">
+                    <?= session('delete')?>
                 </div>
             @endif
         <div class="header-text">
@@ -25,6 +34,7 @@
                     <th>Jenis Kelamin</th>
                     <th>Agama</th>
                     <th>Alamat</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,6 +47,10 @@
                         <td>{{$siswa->jenis_kelamin}}</td>
                         <td>{{$siswa->agama}}</td>
                         <td>{{$siswa->alamat}}</td>
+                        <td>
+                            <a href="/siswa/{{$siswa->id}}/edit" class="btn btn-warning">Edit</a>
+                            <a href="/siswa/{{$siswa->id}}/delete" class="btn btn-danger" onclick="return confirm(`are you sure deleted {{$siswa->nama_depan}} ?`)">Delete</a>
+                        </td>
                     </tr>
                     <?php $i++?>
                 @endforeach
